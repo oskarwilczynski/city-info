@@ -3,8 +3,17 @@ import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import SearchBar from 'material-ui-search-bar';
-import logo from './logo.svg';
 import './App.css';
+import styled, { css } from 'styled-components';
+
+injectTapEventPlugin();
+
+const StartTitle = styled.h1`
+    color: grey;
+    font-size: 4vw;
+    letter-spacing: 0.3vw;
+    text-align: center;
+`;
 
 class App extends Component {
     render() {
@@ -20,7 +29,7 @@ class App extends Component {
                             marginTop: '1%'
                         }}
                     />
-                    <h1 className="h1-starter">Just search for the city!</h1>
+                    <StartTitle className="h1-starter">Just search for the city...</StartTitle>
                 </div>
             </MuiThemeProvider>
         );
