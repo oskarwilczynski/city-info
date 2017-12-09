@@ -1,6 +1,11 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
+const StarterDiv = styled.div`
+    padding-top: 8vw;
+    display: none;
+`;
+
 const StarterTitle = styled.h1`
     color: grey;
     font-size: 4vw;
@@ -9,18 +14,18 @@ const StarterTitle = styled.h1`
 `;
 
 const StarterText = styled.p`
-	color: grey;
-	font-size: 2vw;
-	text-align: center;
+    color: grey;
+    font-size: 1.75vw;
+    text-align: center;
 `;
 
 class StarterScreen extends React.Component {
     render() {
-		return (
-            <div>
-				<StarterTitle>Just search for the city...</StarterTitle>
-				<StarterText>CityInfo is a simple React web app that lets you see the basic about your city such as weather or live events.</StarterText>            
-			</div>
+        return (
+            <StarterDiv>
+                <StarterTitle>Just search for the city...</StarterTitle>
+                <StarterText>CityInfo is a simple React web app that lets you see the city information such as basic description, weather or live events.</StarterText>            
+            </StarterDiv>
         )
     }
 }

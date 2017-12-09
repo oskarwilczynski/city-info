@@ -7,7 +7,7 @@ import styled, { css } from 'styled-components';
 
 import SearchBar from 'material-ui-search-bar';
 import StarterScreen from './StarterScreen';
-
+import BasicDesc from './BasicDesc';
 
 
 injectTapEventPlugin();
@@ -30,10 +30,11 @@ class App extends React.Component {
                         style={{
                             margin: '0 auto',
                             maxWidth: '90%',
-                            marginTop: '1%'
+                            marginTop: '2vw'
                         }}
                     />
                     <StarterScreen/>
+                    <BasicDesc/>
                 </div>
             </MuiThemeProvider>
         );
