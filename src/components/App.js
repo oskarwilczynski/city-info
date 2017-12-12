@@ -7,17 +7,11 @@ import styled, { css } from 'styled-components';
 
 import SearchBar from 'material-ui-search-bar';
 import StarterScreen from './StarterScreen';
-import BasicDesc from './BasicDesc';
-
+import DescWindow from './DescWindow';
+import WeatherWindow from './WeatherWindow';
+import EventsWindow from './EventsWindow';
 
 injectTapEventPlugin();
-
-const StarterTitle = styled.h1`
-    color: grey;
-    font-size: 4vw;
-    letter-spacing: 0.3vw;
-    text-align: center;
-`;
 
 class App extends React.Component {
     render() {
@@ -34,7 +28,9 @@ class App extends React.Component {
                         }}
                     />
                     <StarterScreen/>
-                    <BasicDesc/>
+                    <WeatherWindow/>
+                    <DescWindow/>
+                    <EventsWindow/>
                 </div>
             </MuiThemeProvider>
         );

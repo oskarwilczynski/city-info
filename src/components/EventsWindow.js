@@ -4,12 +4,12 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 
 
 const StyledCard = styled(Card)`
-    margin-top: 3vw;
-    width: 60%;
+    width: 35%;
+    float: right;
 `
 
 
-class BasicDesc extends React.Component {
+class EventsWindow extends React.Component {
     render() {
         return (
             <StyledCard>
@@ -36,4 +36,4 @@ class BasicDesc extends React.Component {
     }
 }
 
-export default BasicDesc;
+export default EventsWindow;
