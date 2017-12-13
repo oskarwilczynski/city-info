@@ -4,9 +4,12 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 
 
 const StyledCard = styled(Card)`
-    margin-top: 3vw;
-    width: 48%;
-    float: left;
+    && {
+        margin-top: 3vw;
+        margin-bottom: 1vw;
+        width: 58%;
+        float: left;
+    }
 `
 
 

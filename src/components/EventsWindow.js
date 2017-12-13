@@ -4,8 +4,12 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 
 
 const StyledCard = styled(Card)`
-    width: 35%;
-    float: right;
+    && {
+        margin-top: 3vw;
+        height: 31.70vw;
+        width: 40%;
+        float: right;
+    }
 `
 
 
@@ -13,24 +17,6 @@ class EventsWindow extends React.Component {
     render() {
         return (
             <StyledCard>
-                <CardHeader
-                    title="URL Avatar"
-                    subtitle="Subtitle"
-                />
-                <CardMedia
-                    overlay={
-                        <CardTitle title="Overlay title" subtitle="Overlay subtitle" />
-                    }
-                >
-                    <img src="https://wallpapercave.com/wp/zNAxsEP.jpg" alt="" />
-                </CardMedia>
-                <CardTitle title="Card title" subtitle="Card subtitle" />
-                <CardText>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-                    Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-                    Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
-                </CardText>
             </StyledCard>
         )
     }

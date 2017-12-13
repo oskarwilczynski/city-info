@@ -14,6 +14,14 @@ import EventsWindow from './EventsWindow';
 injectTapEventPlugin();
 
 class App extends React.Component {
+    constructor() {
+        super();
+
+        this.state = {
+            city: {}
+        };
+    }
+
     render() {
         return (
             <MuiThemeProvider>
