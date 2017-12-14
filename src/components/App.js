@@ -14,12 +14,35 @@ import EventsWindow from './EventsWindow';
 injectTapEventPlugin();
 
 class App extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
-            city: {}
+            error: null,
+            isLoaded: false,
+            city: []
         };
+    }
+
+    componentDidMount() {
+        const wikiApi = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro&titles=Leeds&format=json"
+
+        fetch(wikiApi, {mode: 'cors'})
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoaded: true,
+                        city: result
+                    });
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
     }
 
     render() {
