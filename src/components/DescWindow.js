@@ -14,6 +14,13 @@ const StyledCard = styled(Card)`
 
 
 class DescWindow extends React.Component {
+    componentDidMount() {
+        function createMarkup() {
+            return {__html: this.props.city};
+        }
+
+    }
+
     render() {
         return (
             <StyledCard>
@@ -29,11 +36,7 @@ class DescWindow extends React.Component {
                     <img src="https://wallpapercave.com/wp/zNAxsEP.jpg" alt="" />
                 </CardMedia>
                 <CardTitle title="Card title" subtitle="Card subtitle" />
-                <CardText>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-                    Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-                    Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+                <CardText dangerouslySetInnerHTML={createMarkup()}>
                 </CardText>
             </StyledCard>
         )

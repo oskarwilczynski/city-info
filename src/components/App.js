@@ -25,15 +25,15 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        const wikiApi = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro&titles=Leeds&format=json"
+        const wikiApi = "https://en.wikipedia.org/w/api.php?origin=*&action=query&prop=extracts&exintro&titles=Leeds&format=json"
 
-        fetch(wikiApi, {mode: 'cors'})
+        fetch(wikiApi)
             .then(res => res.json())
             .then(
                 (result) => {
                     this.setState({
                         isLoaded: true,
-                        city: result
+                        city: result.query.pages["8262427"].extract
                     });
                 },
                 (error) => {
@@ -60,7 +60,9 @@ class App extends React.Component {
                     />
                     <StarterScreen/>
                     <WeatherWindow/>
-                    <DescWindow/>
+                    <DescWindow
+                        city={this.state.city}
+                    />
                     <EventsWindow/>
                 </div>
             </MuiThemeProvider>
