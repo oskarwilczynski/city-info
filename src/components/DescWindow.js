@@ -14,14 +14,13 @@ const StyledCard = styled(Card)`
 
 
 class DescWindow extends React.Component {
-    componentDidMount() {
+    render() {
+        const city = this.props.city;
+
         function createMarkup() {
-            return {__html: this.props.city};
+            return {__html: city};
         }
 
-    }
-
-    render() {
         return (
             <StyledCard>
                 <CardHeader
