@@ -4,12 +4,15 @@ import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import styled, { css } from 'styled-components';
+import PlacesAutocomplete from 'react-places-autocomplete';
+import { geocodeByAddress, geocodeByPlaceId } from 'react-places-autocomplete';
 
 import SearchBar from 'material-ui-search-bar';
 import StarterScreen from './StarterScreen';
 import DescWindow from './DescWindow';
 import WeatherWindow from './WeatherWindow';
 import EventsWindow from './EventsWindow';
+import SimpleForm from './SimpleForm';
 
 injectTapEventPlugin();
 
@@ -68,15 +71,7 @@ class App extends React.Component {
         return (
             <MuiThemeProvider>
                 <div>
-                    <SearchBar
-                        onChange={() => console.log('onChange')}
-                        onRequestSearch={() => console.log('onRequestSearch')}
-                        style={{
-                            margin: '0 auto',
-                            maxWidth: '90%',
-                            marginTop: '2vw'
-                        }}
-                    />
+                    <SimpleForm/>
                     <StarterScreen/>
                     <WeatherWindow/>
                     <DescWindow
