@@ -7,7 +7,7 @@ const StyledForm = styled.form`
     display: inline-block;
     margin-left: auto;
     margin-right: auto;
-    width: 100%;
+    width: 50%;
 `
 
 const StyledDiv = styled.div`
@@ -17,50 +17,31 @@ const StyledDiv = styled.div`
 `
 
 class SimpleForm extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { address: 'San Francisco, CA' }
-    this.onChange = (address) => this.setState({ address })
-  }
-
-  handleFormSubmit = (event) => {
-    event.preventDefault()
-
-    geocodeByAddress(this.state.address)
-      .then(results => getLatLng(results[0]))
-      .then(latLng => console.log('Success', latLng))
-      .catch(error => console.error('Error', error))
-  }
 
   render() {
     const inputProps = {
-      value: this.state.address,
-      onChange: this.onChange,
+      value: this.props.address,
+      onChange: this.props.onChange,
     }
 
     const myStyles = {
         root: { 
             zIndex: '1093',
         },
-        input: { 
-            display: 'inline',
-            width: '75%',
-        },
-        autocompleteContainer: { 
-            backgroundColor: 'green',
-        },
+        input: { },
+        autocompleteContainer: { },
         autocompleteItem: { },
         autocompleteItemActive: { }
     }
 
     return (
         <StyledDiv>
-            <StyledForm onSubmit={this.handleFormSubmit}>
+            <StyledForm onSubmit={this.props.handleFormSubmit}>
                 <PlacesAutocomplete 
                     inputProps={inputProps}
                     styles={myStyles}
                 />
-                <button style={{verticalAlign: 'middle'}} type="submit">Submit</button>
+                <button style={{}} type="submit">Submit</button>
             </StyledForm>
         </StyledDiv>
     )

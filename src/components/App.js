@@ -4,8 +4,7 @@ import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import styled, { css } from 'styled-components';
-import PlacesAutocomplete from 'react-places-autocomplete';
-import { geocodeByAddress, geocodeByPlaceId } from 'react-places-autocomplete';
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
 import SearchBar from 'material-ui-search-bar';
 import StarterScreen from './StarterScreen';
@@ -19,12 +18,16 @@ injectTapEventPlugin();
 class App extends React.Component {
     constructor(props) {
         super(props);
+        this.handleFormSubmit = this.handleFormSubmit.bind(this);
+        this.onChange = (address) => this.setState({ address })
 
         this.state = {
             error: null,
             isLoaded: false,
             city: [],
-            weather: []
+            weather: [],
+            address: 'San Francisco, CA',
+            coords: []
         };
     }
 
@@ -67,11 +70,30 @@ class App extends React.Component {
             )
     }
 
+    handleFormSubmit = (event) => {
+        event.preventDefault()
+
+        geocodeByAddress(this.state.address)
+          .then(results => getLatLng(results[0]))
+          .then(
+                (latLng) => {
+                    this.setState({
+                        coords: latLng
+                    });
+                }
+            )
+          .catch(error => console.error('Error', error))
+    }
+
     render() {
         return (
             <MuiThemeProvider>
                 <div>
-                    <SimpleForm/>
+                    <SimpleForm
+                        address={this.state.address}
+                        handleFormSubmit={this.handleFormSubmit}
+                        onChange={this.onChange}
+                    />
                     <StarterScreen/>
                     <WeatherWindow/>
                     <DescWindow
