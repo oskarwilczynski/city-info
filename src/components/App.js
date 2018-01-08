@@ -32,25 +32,7 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        const darkSky = "https://cors.io/?https://api.darksky.net/forecast/3ebf0a35b462ec06a8299fc803dfe539/53.801277,-1.548567"
         const wikiApi = "https://en.wikipedia.org/w/api.php?origin=*&action=query&prop=extracts&exintro&titles=Leeds&format=json"
-
-        fetch(darkSky)
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    this.setState({
-                        isLoaded: true,
-                        weather: result
-                    });
-                },
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
-                }
-            )
 
         fetch(wikiApi)
             .then(res => res.json())
@@ -95,7 +77,9 @@ class App extends React.Component {
                         onChange={this.onChange}
                     />
                     <StarterScreen/>
-                    <WeatherWindow/>
+                    <WeatherWindow
+                        coords={this.state.coords}
+                    />
                     <DescWindow
                         city={this.state.city}
                     />

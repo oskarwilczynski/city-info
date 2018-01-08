@@ -12,8 +12,16 @@ const StyledCard = styled(Card)`
     }
 `
 
-
 class WeatherWindow extends React.Component {
+    componentWillReceiveProps(nextProps) {
+        const darkSky = "https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/3ebf0a35b462ec06a8299fc803dfe539/" + nextProps.coords.lat + "," + nextProps.coords.lng
+
+        if( nextProps.coords !== this.props.coords ) {
+            fetch(darkSky)
+                .then(res => res.json())
+        }
+    }
+
     render() {
         return (
             <StyledCard>
