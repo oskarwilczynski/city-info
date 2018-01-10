@@ -25,7 +25,6 @@ class App extends React.Component {
             error: null,
             isLoaded: false,
             city: [],
-            weather: [],
             address: 'San Francisco, CA',
             coords: []
         };
