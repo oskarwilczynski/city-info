@@ -1,4 +1,5 @@
 import React from 'react';
+import Skycons from 'react-skycons';
 import styled, { css } from 'styled-components';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
@@ -12,6 +13,14 @@ const StyledCard = styled(Card)`
     }
 `
 
+const StyledTemp = styled.p`
+    float: left;
+`
+
+const StyledSummary = styled.p`
+    float: right;
+`
+
 class WeatherWindow extends React.Component {
     constructor(props) {
         super(props);
@@ -19,10 +28,7 @@ class WeatherWindow extends React.Component {
         this.state = {
             error: null,
             isLoaded: false,
-            weather: {
-                temperature: "",
-                summary: ""
-            }
+            weather: {}
         };
     }
 
@@ -37,8 +43,9 @@ class WeatherWindow extends React.Component {
                         this.setState({
                             isLoaded: true,
                             weather: {
-                                temperature: result.currently.temperature,
-                                summary: result.currently.summary
+                                temperature: Math.round(result.currently.temperature),
+                                summary: result.currently.summary,
+                                icon: result.currently.icon.replace(/-/g, "_").toUpperCase()
                             }
                         });
                     },
@@ -55,8 +62,11 @@ class WeatherWindow extends React.Component {
     render() {
         return (
             <StyledCard>
-                <p>{this.state.weather.temperature}</p>
-                <p>{this.state.weather.summary}</p>
+                <StyledTemp>{this.state.weather.temperature}</StyledTemp>
+                <Skycons 
+                    icon={this.state.weather.icon}
+                />
+                <StyledSummary>{this.state.weather.summary}</StyledSummary>
             </StyledCard>
         )
     }
