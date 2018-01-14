@@ -17,6 +17,13 @@ const StyledTemp = styled.p`
     float: left;
 `
 
+const StyledSkycons = styled(Skycons)`
+    && {
+        width: 50% !important;
+        height: 50% !important;
+    }
+`
+
 const StyledSummary = styled.p`
     float: right;
 `
@@ -63,7 +70,7 @@ class WeatherWindow extends React.Component {
         return (
             <StyledCard>
                 <StyledTemp>{this.state.weather.temperature}</StyledTemp>
-                <Skycons 
+                <StyledSkycons 
                     icon={this.state.weather.icon}
                 />
                 <StyledSummary>{this.state.weather.summary}</StyledSummary>
