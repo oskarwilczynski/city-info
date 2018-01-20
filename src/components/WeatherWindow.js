@@ -7,25 +7,35 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 const StyledCard = styled(Card)`
     && {
         margin-top: 3vw;
-        height: 10vw;
         width: 40%;
         float: right;
     }
 `
 
+const StyledFlebox = styled.div`
+    display: flex;
+    margin-top: 1vw;
+    margin-bottom: 1vw;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+`
+
 const StyledTemp = styled.p`
-    float: left;
+    font-size: 5vw;
+    margin: 0;
 `
 
 const StyledSkycons = styled(Skycons)`
     && {
-        width: 50% !important;
-        height: 50% !important;
+        width: 40% !important;
+        height: 40% !important;
     }
 `
 
 const StyledSummary = styled.p`
-    float: right;
+    font-size: 2vw;
+    margin: 0;
 `
 
 class WeatherWindow extends React.Component {
@@ -50,7 +60,7 @@ class WeatherWindow extends React.Component {
                         this.setState({
                             isLoaded: true,
                             weather: {
-                                temperature: Math.round(result.currently.temperature),
+                                temperature: Math.round(result.currently.temperature) + "\xB0C",
                                 summary: result.currently.summary,
                                 icon: result.currently.icon.replace(/-/g, "_").toUpperCase()
                             }
@@ -69,11 +79,12 @@ class WeatherWindow extends React.Component {
     render() {
         return (
             <StyledCard>
-                <StyledTemp>{this.state.weather.temperature}</StyledTemp>
-                <StyledSkycons 
-                    icon={this.state.weather.icon}
-                />
-                <StyledSummary>{this.state.weather.summary}</StyledSummary>
+                <StyledFlebox>
+                    <StyledTemp>{this.state.weather.temperature}</StyledTemp>
+                    <StyledSkycons 
+                        icon={this.state.weather.icon}
+                    />
+                </StyledFlebox>
             </StyledCard>
         )
     }
