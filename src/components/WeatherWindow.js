@@ -18,7 +18,7 @@ const StyledFlebox = styled.div`
     margin-bottom: 1vw;
     align-items: center;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-evenly;
 `
 
 const StyledTemp = styled.p`

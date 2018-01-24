@@ -14,6 +14,47 @@ const StyledCard = styled(Card)`
 
 
 class DescWindow extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            error: null,
+            isLoaded: false,
+            city: {
+                pageid: ""
+            }
+        };
+    }
+
+    componentDidMount() {
+        const wikiApi = "https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&list=search&utf8=&srsearch=Gdansk"
+
+        fetch(wikiApi)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoaded: true,
+                        city: {
+                            pageid: result.query.search[0].pageid
+                        }
+                    });
+                })
+            .then(
+                fetch("https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=extracts&exintro=&explaintext=&pageids=" + this.state.city.pageid)
+                    .then(res => res.json())
+                    .then(
+                        (result) => {
+                            this.setState({
+                                isLoaded: true,
+                                city: {
+                                    blabla: result
+                                }
+                            });
+                        })
+                )
+    }
+
     render() {
         const city = this.props.city;
 

@@ -24,31 +24,9 @@ class App extends React.Component {
         this.state = {
             error: null,
             isLoaded: false,
-            city: [],
             address: 'San Francisco, CA',
             coords: []
         };
-    }
-
-    componentDidMount() {
-        const wikiApi = "https://en.wikipedia.org/w/api.php?origin=*&action=query&prop=extracts&exintro&titles=Leeds&format=json"
-
-        fetch(wikiApi)
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    this.setState({
-                        isLoaded: true,
-                        city: result.query.pages["8262427"].extract
-                    });
-                },
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
-                }
-            )
     }
 
     handleFormSubmit = (event) => {
@@ -80,7 +58,7 @@ class App extends React.Component {
                         coords={this.state.coords}
                     />
                     <DescWindow
-                        city={this.state.city}
+                        address={this.state.address}
                     />
                     <EventsWindow/>
                 </div>
