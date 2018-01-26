@@ -16,43 +16,42 @@ const StyledCard = styled(Card)`
 class DescWindow extends React.Component {
     constructor(props) {
         super(props);
+        this.getCityDesc = this.getCityDesc.bind(this);
 
         this.state = {
             error: null,
             isLoaded: false,
-            city: {
-                pageid: ""
-            }
+            city: {}
         };
     }
 
-    componentDidMount() {
-        const wikiApi = "https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&list=search&utf8=&srsearch=Gdansk"
+    getCityDesc = () => {
+        const wikiApiPageId = "https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&list=search&utf8=&srsearch=Gdansk"
 
-        fetch(wikiApi)
+        return fetch(wikiApiPageId)
             .then(res => res.json())
             .then(
                 (result) => {
-                    this.setState({
-                        isLoaded: true,
-                        city: {
-                            pageid: result.query.search[0].pageid
-                        }
-                    });
-                })
-            .then(
-                fetch("https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=extracts&exintro=&explaintext=&pageids=" + this.state.city.pageid)
-                    .then(res => res.json())
-                    .then(
-                        (result) => {
-                            this.setState({
-                                isLoaded: true,
-                                city: {
-                                    blabla: result
-                                }
-                            });
-                        })
-                )
+                    const wikiApiCityDesc = "https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=extracts&exintro=&explaintext=&pageids=" + result.query.search[0].pageid
+                    
+                    return fetch(wikiApiCityDesc)
+                        .then(res => res.json())
+                        .then(
+                            (result) => {
+                                this.setState({
+                                    isLoaded: true,
+                                    city: {
+                                        description: result
+                                    }
+                                });
+                            }
+                        )
+                }
+            );
+    }
+
+    componentDidMount() {
+        this.getCityDesc()      
     }
 
     render() {
