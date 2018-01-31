@@ -26,7 +26,7 @@ class DescWindow extends React.Component {
     }
 
     getCityDesc = () => {
-        const wikiApiPageId = "https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&list=search&utf8=&srsearch=Gdansk"
+        const wikiApiPageId = "https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&list=search&utf8=&srsearch=" + this.props.address
 
         return fetch(wikiApiPageId)
             .then(res => res.json())
@@ -50,8 +50,10 @@ class DescWindow extends React.Component {
             );
     }
 
-    componentDidMount() {
-        this.getCityDesc()      
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.address !== this.props.address) {
+            this.getCityDesc()      
+        }
     }
 
     render() {

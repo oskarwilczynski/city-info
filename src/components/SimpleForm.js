@@ -36,7 +36,7 @@ class SimpleForm extends React.Component {
 
     return (
         <StyledDiv>
-            <StyledForm onSubmit={this.props.handleFormSubmit}>
+            <StyledForm onSubmit={this.props.getApis}>
                 <PlacesAutocomplete 
                     inputProps={inputProps}
                     styles={myStyles}
