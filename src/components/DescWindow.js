@@ -57,7 +57,7 @@ class DescWindow extends React.Component {
     }
 
     render() {
-        const city = this.props.city;
+        const city = this.props.city.description;
 
         function createMarkup() {
             return {__html: city};

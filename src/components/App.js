@@ -24,6 +24,7 @@ class App extends React.Component {
         this.state = {
             error: null,
             isLoaded: false,
+            city: [],
             address: 'San Francisco, CA',
             coords: []
         };
@@ -49,6 +50,7 @@ class App extends React.Component {
             .then(res => res.json())
             .then(
                 (result) => {
+                    const wikiApiCityDescPageId = result.query.search[0].pageid
                     const wikiApiCityDesc = "https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=extracts&exintro=&explaintext=&pageids=" + result.query.search[0].pageid
                     
                     return fetch(wikiApiCityDesc)
@@ -58,7 +60,7 @@ class App extends React.Component {
                                 this.setState({
                                     isLoaded: true,
                                     city: {
-                                        description: result
+                                        description: result.query.pages[wikiApiCityDescPageId].extract
                                     }
                                 });
                             }
@@ -87,7 +89,9 @@ class App extends React.Component {
                     <WeatherWindow
                         coords={this.state.coords}
                     />
-                    <DescWindow/>
+                    <DescWindow
+                        city={this.state.city}
+                    />
                     <EventsWindow/>
                 </div>
             </MuiThemeProvider>
