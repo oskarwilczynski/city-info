@@ -51,7 +51,7 @@ class App extends React.Component {
             .then(
                 (result) => {
                     const wikiApiCityDescPageId = result.query.search[0].pageid
-                    const wikiApiCityDesc = "https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=extracts&exintro=&explaintext=&pageids=" + result.query.search[0].pageid
+                    const wikiApiCityDesc = "https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=extracts&exintro=&pageids=" + result.query.search[0].pageid
                     
                     return fetch(wikiApiCityDesc)
                         .then(res => res.json())
@@ -60,6 +60,7 @@ class App extends React.Component {
                                 this.setState({
                                     isLoaded: true,
                                     city: {
+                                        title: result.query.pages[wikiApiCityDescPageId].title,
                                         description: result.query.pages[wikiApiCityDescPageId].extract
                                     }
                                 });
