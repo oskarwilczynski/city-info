@@ -65,18 +65,13 @@ class DescWindow extends React.Component {
 
         return (
             <StyledCard>
-                <CardHeader
-                    title="URL Avatar"
-                    subtitle="Subtitle"
-                />
                 <CardMedia
                     overlay={
-                        <CardTitle title="Overlay title" subtitle="Overlay subtitle" />
+                        <CardTitle title={this.props.city.title}/>
                     }
                 >
-                    <img src="https://wallpapercave.com/wp/zNAxsEP.jpg" alt="" />
+                    <img src={this.props.city.image} alt="" />
                 </CardMedia>
-                <CardTitle title="Card title" subtitle="Card subtitle" />
                 <CardText dangerouslySetInnerHTML={createMarkup()}>
                 </CardText>
             </StyledCard>

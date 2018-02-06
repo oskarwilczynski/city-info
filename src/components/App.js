@@ -26,7 +26,8 @@ class App extends React.Component {
             isLoaded: false,
             city: [],
             address: 'San Francisco, CA',
-            coords: []
+            coords: [],
+            events: []
         };
     }
 
@@ -64,6 +65,21 @@ class App extends React.Component {
                                         description: result.query.pages[wikiApiCityDescPageId].extract
                                     }
                                 });
+                                
+                                return fetch("https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=pageimages&&piprop=original&titles=" + this.state.city.title)
+                                    .then(res => res.json())
+                                    .then(
+                                        (result) => {
+                                            this.setState({
+                                                city: {
+                                                    ...this.state.city,
+                                                    image: result.query.pages[wikiApiCityDescPageId].original.source
+                                                }
+                                            })
+                                        }
+
+
+                                    )
                             }
                         )
                 }
