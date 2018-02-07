@@ -39,6 +39,8 @@ class App extends React.Component {
                     this.setState({
                         coords: latLng
                     });
+
+                this.getEvents();
                 }
             )
           .catch(error => console.error('Error', error))
@@ -77,13 +79,23 @@ class App extends React.Component {
                                                 }
                                             })
                                         }
-
-
                                     )
                             }
                         )
                 }
             );
+    }
+
+    getEvents = () => {
+        return fetch("https://cors-anywhere.herokuapp.com/http://api.eventful.com/json/events/search?app_key=pMZVPqg7vM3CW3fM&q=music&where=" + this.state.coords.lat + "," + this.state.coords.lng + "&within=25")
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        events: result
+                    })
+                }
+            )
     }
 
     getApis = (event) => {
