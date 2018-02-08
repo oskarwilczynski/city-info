@@ -27,7 +27,9 @@ class App extends React.Component {
             city: [],
             address: 'San Francisco, CA',
             coords: [],
-            events: []
+            events: {
+                event: []
+            }
         };
     }
 
@@ -92,7 +94,7 @@ class App extends React.Component {
             .then(
                 (result) => {
                     this.setState({
-                        events: result
+                        events: result.events
                     })
                 }
             )
@@ -121,7 +123,9 @@ class App extends React.Component {
                     <DescWindow
                         city={this.state.city}
                     />
-                    <EventsWindow/>
+                    <EventsWindow
+                        events={this.state.events}
+                    />
                 </div>
             </MuiThemeProvider>
         );

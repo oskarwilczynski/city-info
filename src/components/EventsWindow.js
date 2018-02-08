@@ -17,6 +17,11 @@ class EventsWindow extends React.Component {
     render() {
         return (
             <StyledCard>
+                {
+                    Object
+                    .keys(this.props.events.event)
+                    .map(key => <div key={key}>{key}</div>)
+                }
             </StyledCard>
         )
     }
