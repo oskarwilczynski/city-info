@@ -4,16 +4,26 @@ import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import styled, { css } from 'styled-components';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
 import SearchBar from 'material-ui-search-bar';
 import StarterScreen from './StarterScreen';
 import DescWindow from './DescWindow';
 import WeatherWindow from './WeatherWindow';
-import EventsWindow from './EventsWindow';
 import SimpleForm from './SimpleForm';
+import Event from './Event';
 
 injectTapEventPlugin();
+
+const EventsWindow = styled(Card)`
+    && {
+        margin-top: 3vw;
+        height: 31.70vw;
+        width: 40%;
+        float: right;
+    }
+`
 
 class App extends React.Component {
     constructor(props) {
@@ -42,7 +52,7 @@ class App extends React.Component {
                         coords: latLng
                     });
 
-                this.getEvents();
+                    this.getEvents();
                 }
             )
           .catch(error => console.error('Error', error))
@@ -89,7 +99,7 @@ class App extends React.Component {
     }
 
     getEvents = () => {
-        return fetch("https://cors-anywhere.herokuapp.com/http://api.eventful.com/json/events/search?app_key=pMZVPqg7vM3CW3fM&q=music&where=" + this.state.coords.lat + "," + this.state.coords.lng + "&within=25")
+        return fetch("https://cors-anywhere.herokuapp.com/http://api.eventful.com/json/events/search?app_key=pMZVPqg7vM3CW3fM&q=music&where=" + this.state.coords.lat + "," + this.state.coords.lng + "&within=25&page_size=5")
             .then(res => res.json())
             .then(
                 (result) => {
@@ -123,9 +133,13 @@ class App extends React.Component {
                     <DescWindow
                         city={this.state.city}
                     />
-                    <EventsWindow
-                        events={this.state.events}
-                    />
+                    <EventsWindow>
+                        {
+                            Object
+                            .keys(this.state.events.event)
+                            .map(key => <Event key={key} details={this.state.events.event[key]} />)
+                        }
+                    </EventsWindow>
                 </div>
             </MuiThemeProvider>
         );
