@@ -137,7 +137,7 @@ class App extends React.Component {
                         {
                             Object
                             .keys(this.state.events.event)
-                            .map(key => <Event key={key} details={this.state.events.event[key]} />)
+                            .map(key => <Event key={key} details={this.state.events.event[key]}/>)
                         }
                     </EventsWindow>
                 </div>
