@@ -19,7 +19,7 @@ injectTapEventPlugin();
 const EventsWindow = styled(Card)`
     && {
         margin-top: 3vw;
-        height: 31.70vw;
+        height: 35svw;
         width: 40%;
         float: right;
     }

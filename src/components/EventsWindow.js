@@ -5,9 +5,9 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 
 const StyledCard = styled(Card)`
     && {
+        height: 300px;
         margin-top: 3vw;
         width: 40%;
-        float: right;
     }
 `
 

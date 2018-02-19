@@ -3,11 +3,26 @@ import styled, { css } from 'styled-components';
 
 const StyledDiv = styled.div`
     && {
+        height: 20%;
         cursor: pointer;
     }
 `
 
 const StyledImg = styled.img`
+    && {
+        float: left;
+        max-height: 48px;
+        max-width: 48px;
+        margin: 0.5vw;
+    }
+`
+
+const StyledTitle = styled.h3`
+    && {
+    }
+`
+
+const StyledVenue = styled.p`
     && {
     }
 `
@@ -22,9 +37,9 @@ class Event extends React.Component {
 
         return (
             <StyledDiv onClick={() => {this.onClickEvent()}}>
-                <StyledImg src={this.props.details.image ? this.props.details.image.medium.url : imagePlaceholder} />
-                <h3>{this.props.details.title}</h3>
-                <p>{this.props.details.venue_name}</p>
+                <StyledImg src={this.props.details.image ? this.props.details.image.url : imagePlaceholder} />
+                <StyledTitle>{this.props.details.title}</StyledTitle>
+                <StyledVenue>{this.props.details.venue_name}</StyledVenue>
             </StyledDiv>
         )
     }
