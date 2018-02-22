@@ -4,16 +4,21 @@ import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-au
 import styled, { css } from 'styled-components';
 
 const StyledForm = styled.form`
-    display: inline-block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction:row;
+    padding:2px;
 `
 
 const StyledDiv = styled.div`
     display: block;
     text-align: center;
     width: 100%;
+`
+
+const StyledBtn = styled.button`
+    
 `
 
 class SimpleForm extends React.Component {
@@ -28,22 +33,25 @@ class SimpleForm extends React.Component {
         root: { 
             zIndex: '1093',
         },
-        input: { },
+        input: {
+            flexGrow: '2',
+            width: '50vw',
+            height: '3vw',
+            fontSize: '3vw'
+        },
         autocompleteContainer: { },
         autocompleteItem: { },
         autocompleteItemActive: { }
     }
 
     return (
-        <StyledDiv>
-            <StyledForm onSubmit={this.props.getApis}>
-                <PlacesAutocomplete 
-                    inputProps={inputProps}
-                    styles={myStyles}
-                />
-                <button style={{}} type="submit">Submit</button>
-            </StyledForm>
-        </StyledDiv>
+        <StyledForm onSubmit={this.props.getApis}>
+            <PlacesAutocomplete 
+                inputProps={inputProps}
+                styles={myStyles}
+            />
+            <button type="submit">Submit</button>
+        </StyledForm>
     )
   }
 }

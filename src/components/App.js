@@ -35,7 +35,7 @@ class App extends React.Component {
             error: null,
             isLoaded: false,
             city: [],
-            address: 'San Francisco, CA',
+            address: 'Leeds, UK',
             coords: [],
             events: {
                 event: []
