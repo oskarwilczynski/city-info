@@ -12,13 +12,22 @@ const StyledForm = styled.form`
 `
 
 const StyledDiv = styled.div`
-    display: block;
-    text-align: center;
-    width: 100%;
+    position: relative;
 `
 
 const StyledBtn = styled.button`
-    
+    position: absolute;
+    font-size: 4vw;
+    right: 0.25vw;
+    top: 0.5vw;
+    z-index: 1100;
+    border: none;
+    background: white;
+
+    &:hover {
+      background-color: #37C88D;
+      color: #fff;
+      cursor: pointer;
 `
 
 class SimpleForm extends React.Component {
@@ -35,9 +44,10 @@ class SimpleForm extends React.Component {
         },
         input: {
             flexGrow: '2',
-            width: '50vw',
+            width: '100%',
             height: '3vw',
-            fontSize: '3vw'
+            fontSize: '3vw',
+            padding: '15px'
         },
         autocompleteContainer: { },
         autocompleteItem: { },
@@ -46,11 +56,15 @@ class SimpleForm extends React.Component {
 
     return (
         <StyledForm onSubmit={this.props.getApis}>
-            <PlacesAutocomplete 
-                inputProps={inputProps}
-                styles={myStyles}
-            />
-            <button type="submit">Submit</button>
+            <StyledDiv>
+                <PlacesAutocomplete 
+                    inputProps={inputProps}
+                    styles={myStyles}
+                />
+                <StyledBtn type="submit">
+                    <i className="fas fa-search"></i>
+                </StyledBtn>
+            </StyledDiv>
         </StyledForm>
     )
   }
