@@ -33,6 +33,7 @@ class App extends React.Component {
 
         this.state = {
             error: null,
+            isClicked: false,
             isLoaded: false,
             city: [],
             address: 'Leeds, UK',
@@ -120,29 +121,42 @@ class App extends React.Component {
     render() {
         return (
             <MuiThemeProvider>
-                <div>
-                    <SimpleForm
-                        address={this.state.address}
-                        getApis={this.getApis}
-                        onChange={this.onChange}
-                    />
-                    <StarterScreen/>
-                    <WeatherWindow
-                        coords={this.state.coords}
-                    />
-                    <DescWindow
-                        city={this.state.city}
-                    />
-                    <EventsWindow>
-                        {
-                            Object
-                            .keys(this.state.events.event)
-                            .map(key => <Event key={key} details={this.state.events.event[key]}/>)
-                        }
-                    </EventsWindow>
-                </div>
+                <SimpleForm
+                    address={this.state.address}
+                    getApis={this.getApis}
+                    onChange={this.onChange}
+                />
+                <StarterScreen/>
             </MuiThemeProvider>
-        );
+        )
+
+        if (this.state.isClicked) {
+            return (
+                <MuiThemeProvider>
+                    <div>
+                        <SimpleForm
+                            address={this.state.address}
+                            getApis={this.getApis}
+                            onChange={this.onChange}
+                        />
+                        <StarterScreen/>
+                        <WeatherWindow
+                            coords={this.state.coords}
+                        />
+                        <DescWindow
+                            city={this.state.city}
+                        />
+                        <EventsWindow>
+                            {
+                                Object
+                                .keys(this.state.events.event)
+                                .map(key => <Event key={key} details={this.state.events.event[key]}/>)
+                            }
+                        </EventsWindow>
+                    </div>
+                </MuiThemeProvider>
+            );
+        }
     }
 }
 

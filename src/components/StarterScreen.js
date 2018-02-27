@@ -3,7 +3,6 @@ import styled, { css } from 'styled-components';
 
 const StarterDiv = styled.div`
     padding-top: 8vw;
-    display: none;
 `;
 
 const StarterTitle = styled.h1`
