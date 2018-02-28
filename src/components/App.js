@@ -114,21 +114,29 @@ class App extends React.Component {
     getApis = (event) => {
         event.preventDefault()
 
+        this.setState({
+            isClicked: true
+        })
+
         this.handleFormSubmit();
         this.getCityDesc();
     }
 
     render() {
-        return (
-            <MuiThemeProvider>
-                <SimpleForm
-                    address={this.state.address}
-                    getApis={this.getApis}
-                    onChange={this.onChange}
-                />
-                <StarterScreen/>
-            </MuiThemeProvider>
-        )
+        if (!this.state.isClicked) {
+            return (
+                <MuiThemeProvider>
+                    <div>
+                        <SimpleForm
+                            address={this.state.address}
+                            getApis={this.getApis}
+                            onChange={this.onChange}
+                        />
+                        <StarterScreen/>
+                    </div>
+                </MuiThemeProvider>
+            )
+        }
 
         if (this.state.isClicked) {
             return (
