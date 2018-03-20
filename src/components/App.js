@@ -147,7 +147,6 @@ class App extends React.Component {
                             getApis={this.getApis}
                             onChange={this.onChange}
                         />
-                        <StarterScreen/>
                         <WeatherWindow
                             coords={this.state.coords}
                         />
