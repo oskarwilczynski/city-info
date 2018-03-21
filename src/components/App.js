@@ -32,7 +32,7 @@ class App extends React.Component {
         this.onChange = (address) => this.setState({ address })
 
         this.state = {
-            error: null,
+            isError: false,
             isClicked: false,
             isLoaded: false,
             city: [],
@@ -132,6 +132,7 @@ class App extends React.Component {
                             getApis={this.getApis}
                             onChange={this.onChange}
                         />
+                        <p style={{display: this.state.isError ? 'block' : 'none'}}>City not found!</p>
                         <StarterScreen/>
                     </div>
                 </MuiThemeProvider>
@@ -147,6 +148,7 @@ class App extends React.Component {
                             getApis={this.getApis}
                             onChange={this.onChange}
                         />
+                        <p style={{display: this.state.isError ? 'block' : 'none'}}>City not found!</p>
                         <WeatherWindow
                             coords={this.state.coords}
                         />
