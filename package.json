@@ -1,5 +1,6 @@
 {
   "name": "city-info",
+  "homepage": "http://oskarwilczynski.com/projects/city-info/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
