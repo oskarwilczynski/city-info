@@ -1,7 +1,7 @@
 import React from 'react';
 import Skycons from 'react-skycons';
-import styled, { css } from 'styled-components';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import styled from 'styled-components';
+import Card from 'material-ui/Card';
 
 
 const StyledCard = styled(Card)`
@@ -31,11 +31,6 @@ const StyledSkycons = styled(Skycons)`
         width: 40% !important;
         height: 40% !important;
     }
-`
-
-const StyledSummary = styled.p`
-    font-size: 2vw;
-    margin: 0;
 `
 
 class WeatherWindow extends React.Component {

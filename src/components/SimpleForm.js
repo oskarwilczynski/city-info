@@ -1,7 +1,7 @@
 import React from 'react';
-import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import PlacesAutocomplete from 'react-places-autocomplete';
 
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 const StyledForm = styled.form`
     display:flex;

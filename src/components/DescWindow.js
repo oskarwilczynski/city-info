@@ -1,6 +1,6 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import styled from 'styled-components';
+import {Card, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 
 const StyledCard = styled(Card)`

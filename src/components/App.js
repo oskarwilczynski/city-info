@@ -1,20 +1,15 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import styled, { css } from 'styled-components';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import styled from 'styled-components';
+import Card from 'material-ui/Card';
+import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
-import SearchBar from 'material-ui-search-bar';
 import StarterScreen from './StarterScreen';
 import DescWindow from './DescWindow';
 import WeatherWindow from './WeatherWindow';
 import SimpleForm from './SimpleForm';
 import Event from './Event';
-
-injectTapEventPlugin();
 
 const EventsWindow = styled(Card)`
     && {
