@@ -38,36 +38,43 @@ class WeatherWindow extends React.Component {
         super(props);
 
         this.state = {
-            error: null,
-            isLoaded: false,
             weather: {}
         };
     }
 
-    componentWillReceiveProps(nextProps) {
-        const darkSky = "https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/3ebf0a35b462ec06a8299fc803dfe539/" + nextProps.coords.lat + "," + nextProps.coords.lng + "?units=si&exclude=minutely,hourly,daily,alerts,flags"
+    getWeather = async (url) => {
+        try {
+            const response = await fetch(url, {signal: this.props.fetchSignal});
 
-        if (nextProps.coords !== this.props.coords) {
-            fetch(darkSky)
-                .then(res => res.json())
-                .then(
-                    (result) => {
-                        this.setState({
-                            isLoaded: true,
-                            weather: {
-                                temperature: Math.round(result.currently.temperature) + "\xB0C",
-                                summary: result.currently.summary,
-                                icon: result.currently.icon.replace(/-/g, "_").toUpperCase()
-                            }
-                        });
-                    },
-                    (error) => {
-                        this.setState({
-                            isLoaded: true,
-                            error
-                        });
-                    }
-                )
+            if (!response.ok) {
+                throw Error(response.statusText);
+            }
+
+            const result = await response.json();
+
+            this.setState({
+                weather: {
+                    temperature: Math.round(result.currently.temperature) + "\xB0C",
+                    summary: result.currently.summary,
+                    icon: result.currently.icon.replace(/-/g, "_").toUpperCase()
+                }
+            });
+        } catch(error) {
+            this.props.handleError(error);
+        }
+    }
+
+    componentDidMount() {
+        let darkSky = `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/3ebf0a35b462ec06a8299fc803dfe539/${this.props.coords.lat},${this.props.coords.lng}?units=si&exclude=minutely,hourly,daily,alerts,flags`
+
+        this.getWeather(darkSky);
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.coords !== prevProps.coords) {
+            let darkSky = `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/3ebf0a35b462ec06a8299fc803dfe539/${this.props.coords.lat},${this.props.coords.lng}?units=si&exclude=minutely,hourly,daily,alerts,flags`
+
+            this.getWeather(darkSky);
         }
     }
 

@@ -5,9 +5,10 @@
   "private": true,
   "dependencies": {
     "material-ui": "^0.19.4",
-    "material-ui-search-bar": "^0.4.1",
+    "material-ui-search-bar": "^0.4.2",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
+    "react-load-script": "0.0.6",
     "react-places-autocomplete": "^5.4.3",
     "react-scripts": "1.0.17",
     "react-skycons": "^0.7.0",

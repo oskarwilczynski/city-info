@@ -1,63 +1,74 @@
 import React from 'react';
-import PlacesAutocomplete from 'react-places-autocomplete';
-
-import styled from 'styled-components';
-
-const StyledForm = styled.form`
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction:row;
-    padding:2px;
-`
-
-const StyledBtn = styled.button`
-    font-size: 4vw;
-    color: #D3D3D3;
-    z-index: 1100;
-    border: none;
-    background: white;
-    text-align: center;
-    &:hover {
-      color: #A9A9A9;
-      cursor: pointer;
-`
+import SearchBar from 'material-ui-search-bar';
+import Script from 'react-load-script';
 
 class SimpleForm extends React.Component {
+    constructor(props) {
+        super(props);
+    
+        this.state = {
+          query: ""
+        };
+    }
+
+    handleSearchSubmit = () =>  {
+        let addressObject = this.autocomplete.getPlace();
+        let address = addressObject.formatted_address;
+        
+        this.props.setAddress(address);
+        this.props.setCoords({
+            coords: {
+                lat: addressObject.geometry.location.lat(),
+                lng: addressObject.geometry.location.lng()
+            }
+        });
+
+        if (address) {
+            this.setState(
+                {
+                    query: address
+                }
+            );
+        }
+
+        this.props.isClicked(true);
+    }
+
+    handleScriptLoad = () => {
+        var options = {
+            types: ['(cities)'],
+        };
+
+        /*global google*/
+        this.autocomplete = new google.maps.places.Autocomplete(
+            document.getElementById('autocomplete'),
+            options,
+        );
+
+        this.autocomplete.addListener('place_changed', this.handleSearchSubmit);
+    }
 
   render() {
-    const inputProps = {
-      value: this.props.address,
-      onChange: this.props.onChange,
-    }
-
-    const myStyles = {
-        root: { 
-            zIndex: '1093'
-        },
-        input: {
-            flexGrow: '2',
-            width: '107%',
-            height: '3vw',
-            fontSize: '3vw',
-            padding: '2vw'
-        },
-        autocompleteContainer: { },
-        autocompleteItem: { },
-        autocompleteItemActive: { }
-    }
-
     return (
-        <StyledForm onSubmit={this.props.getApis}>
-            <PlacesAutocomplete 
-                inputProps={inputProps}
-                styles={myStyles}
+        <div>
+            <Script url="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4S7a-WtPtr7UD7whHwe9nbsq6zpShc_U&libraries=places,geometry&language=en"          
+                onLoad={this.handleScriptLoad}
+            />        
+            <SearchBar 
+                id="autocomplete"
+                onRequestSearch={() => {return false;}}
+                onChange={() => {return false;}}
+                placeholder="" 
+                hintText="Search City" 
+                value={this.state.query}
+                style={{
+                    margin: '0 auto',
+                    marginTop: '2vw',
+                    maxWidth: 800
+                }}
             />
-            <StyledBtn type="submit">
-                <i className="fas fa-search"></i>
-            </StyledBtn>
-        </StyledForm>
-    )
+        </div>
+    );
   }
 }
 

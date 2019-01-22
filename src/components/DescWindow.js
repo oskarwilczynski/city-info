@@ -12,52 +12,87 @@ const StyledCard = styled(Card)`
     }
 `
 
-
 class DescWindow extends React.Component {
     constructor(props) {
         super(props);
-        this.getCityDesc = this.getCityDesc.bind(this);
 
         this.state = {
-            error: null,
-            isLoaded: false,
-            city: {}
+            city: []
         };
     }
 
-    getCityDesc = () => {
-        const wikiApiPageId = "https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&list=search&utf8=&srsearch=" + this.props.address
+    getCityDesc = async (url, id) => {
+        try {
+            const response = await fetch(url, {signal: this.props.fetchSignal});
 
-        return fetch(wikiApiPageId)
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    const wikiApiCityDesc = "https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=extracts&exintro=&explaintext=&pageids=" + result.query.search[0].pageid
-                    
-                    return fetch(wikiApiCityDesc)
-                        .then(res => res.json())
-                        .then(
-                            (result) => {
-                                this.setState({
-                                    isLoaded: true,
-                                    city: {
-                                        description: result
-                                    }
-                                });
-                            }
-                        )
+            if (!response.ok) {
+                throw Error(response.statusText);
+            }
+
+            const result = await response.json();
+
+            this.setState({ 
+                city: {
+                    title: result.query.pages[id].title,
+                    description: result.query.pages[id].extract
                 }
-            );
+            });
+        } catch(error) {
+            this.props.handleError(error);
+        }
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.address !== this.props.address) {
-            this.getCityDesc()      
+    getCityImg = async (url, id) => {
+        try {
+            const response = await fetch(url, {signal: this.props.fetchSignal});
+
+            if (!response.ok) {
+                throw Error(response.statusText);
+            }
+
+            const result = await response.json();
+
+            this.setState({ 
+                city: {
+                    ...this.state.city,
+                    image: result.query.pages[id].original.source
+                }
+            });
+        } catch(error) {
+            this.props.handleError(error);
+        }
+    }
+
+    getDescData = async () => {
+        try {
+            const response = await fetch(`https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&list=search&utf8=&srsearch=${this.props.address}`, {signal: this.fetchSignal});
+    
+            if (!response.ok) {
+                throw Error(response.statusText);
+            }
+    
+            const result = await response.json();
+            const id = result.query.search[0].pageid;
+    
+            await this.getCityDesc(`https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=extracts&exintro=&pageids=${id}`, id);
+            this.getCityImg(`https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=pageimages&&piprop=original&titles=${this.state.city.title}`, id);
+        } catch(error) {
+            this.props.handleError(error);
+        }
+    }
+
+    componentDidMount() {
+        this.getDescData()
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.address !== prevProps.address) {
+            this.getDescData()
         }
     }
 
     render() {
-        const city = this.props.city.description;
+        const city = this.state.city.description;
 
         function createMarkup() {
             return {__html: city};
@@ -67,10 +102,10 @@ class DescWindow extends React.Component {
             <StyledCard>
                 <CardMedia
                     overlay={
-                        <CardTitle title={this.props.city.title}/>
+                        <CardTitle title={this.state.city.title}/>
                     }
                 >
-                    <img src={this.props.city.image} alt="" />
+                    <img src={this.state.city.image} alt="" />
                 </CardMedia>
                 <CardText dangerouslySetInnerHTML={createMarkup()}>
                 </CardText>
