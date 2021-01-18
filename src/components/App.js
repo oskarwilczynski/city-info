@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { ThemeProvider } from '@material-ui/core/styles';
 
 import StarterScreen from './StarterScreen';
 import DescWindow from './DescWindow';
@@ -9,94 +9,70 @@ import SimpleForm from './SimpleForm';
 import EventsWindow from './EventsWindow';
 import ErrorScreen from './ErrorScreen';
 
-class App extends React.Component {
-    constructor(props) {
-        super(props);
+const App = () => {
+    const [isError, setIsError] = useState(false);
+    const [isClicked, setIsClicked] = useState(false);
+    const [address, setAddress] = useState('');
+    const [coords, setCoords] = useState([]);
 
-        const AbortController = window.AbortController;
-
-        this.fetchController = new AbortController();
-        this.fetchSignal = this.fetchController.signal;
-
-        this.state = {
-            isError: false,
-            isClicked: false,
-            address: '',
-            coords: []
-        };
-    }
-
-    setAddress = (address) => this.setState({ address });
-    setCoords = (coords) => this.setState(coords);
-    isClicked = (isClicked) => this.setState({ isClicked })
-
-    handleError = (error) => {
-        this.setState({ 
-            isError: true
-        });
-
-        this.fetchController.abort();
+    const handleError = (error) => {
+        setIsError(true);
 
         console.error('Error', error);
     }
 
-    render() {
-        if (!this.state.isClicked) {
-            return (
-                <MuiThemeProvider>
-                    <div>
-                        <SimpleForm
-                            setAddress={this.setAddress}
-                            setCoords={this.setCoords}
-                            isClicked={this.isClicked}
-                        />
-                        <StarterScreen/>
-                    </div>
-                </MuiThemeProvider>
-            )
-        }
+    if (!isClicked) {
+        return (
+            <ThemeProvider>
+                <div>
+                    <SimpleForm
+                        setAddress={setAddress}
+                        setCoords={setCoords}
+                        isClicked={setIsClicked}
+                    />
+                    <StarterScreen />
+                </div>
+            </ThemeProvider>
+        )
+    }
 
-        if (this.state.isClicked && this.state.isError) {
-            return (
-                <MuiThemeProvider>
-                    <div>
-                        <SimpleForm
-                            setAddress={this.setAddress}
-                            setCoords={this.setCoords}
-                            isClicked={this.isClicked}
-                        />
-                        <ErrorScreen/>
-                    </div>
-                </MuiThemeProvider>
-            )
-        } else {
-            return (
-                <MuiThemeProvider>
-                    <div>
-                        <SimpleForm
-                            setAddress={this.setAddress}
-                            setCoords={this.setCoords}
-                            isClicked={this.isClicked}
-                        />
-                        <WeatherWindow
-                            coords={this.state.coords}
-                            handleError={this.handleError}
-                            fetchSignal={this.fetchSignal}
-                        />
-                        <DescWindow
-                            address={this.state.address}
-                            handleError={this.handleError}
-                            fetchSignal={this.fetchSignal}
-                        />
-                        <EventsWindow
-                            coords={this.state.coords}
-                            handleError={this.handleError}
-                            fetchSignal={this.fetchSignal}
-                        />
-                    </div>
-                </MuiThemeProvider>
-            );
-        }
+    if (isClicked && isError) {
+        return (
+            <ThemeProvider>
+                <div>
+                    <SimpleForm
+                        setAddress={setAddress}
+                        setCoords={setCoords}
+                        isClicked={setIsClicked}
+                    />
+                    <ErrorScreen/>
+                </div>
+            </ThemeProvider>
+        )
+    } else {
+        return (
+            <ThemeProvider>
+                <div>
+                    <SimpleForm
+                        setAddress={setAddress}
+                        setCoords={setCoords}
+                        isClicked={setIsClicked}
+                    />
+                    <WeatherWindow
+                        coords={coords}
+                        handleError={handleError}
+                    />
+                    <DescWindow
+                        address={address}
+                        handleError={handleError}
+                    />
+                    <EventsWindow
+                        coords={coords}
+                        handleError={handleError}
+                    />
+                </div>
+            </ThemeProvider>
+        );
     }
 }
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { ThemeProvider } from '@material-ui/core/styles';
 
-import Card from 'material-ui/Card';
+import Card from '@material-ui/core/Card';
 
 const ErrorCard = styled(Card)`
     && {
@@ -27,12 +27,12 @@ const ErrorText = styled.p`
 class ErrorScreen extends React.Component {
     render() {
         return (
-            <MuiThemeProvider>
+            <ThemeProvider>
                 <ErrorCard>
                     <ErrorTitle>Error! API fetch failed.</ErrorTitle>
                     <ErrorText>Please try once again or choose other city.</ErrorText>            
                 </ErrorCard>
-            </MuiThemeProvider>
+            </ThemeProvider>
         )
     }
 }

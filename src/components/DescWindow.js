@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Card, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {Card, CardMedia, CardHeader, CardContent} from '@material-ui/core';
 
 
 const StyledCard = styled(Card)`
@@ -102,13 +102,12 @@ class DescWindow extends React.Component {
             <StyledCard>
                 <CardMedia
                     overlay={
-                        <CardTitle title={this.state.city.title}/>
+                        <CardHeader title={this.state.city.title}/>
                     }
                 >
                     <img src={this.state.city.image} alt="" />
                 </CardMedia>
-                <CardText dangerouslySetInnerHTML={createMarkup()}>
-                </CardText>
+                <CardContent dangerouslySetInnerHTML={createMarkup()} />
             </StyledCard>
         )
     }
