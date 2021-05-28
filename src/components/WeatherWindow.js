@@ -1,8 +1,8 @@
-import React from 'react';
 import Skycons from 'react-skycons';
 import styled from 'styled-components';
-import Card from 'material-ui/Card';
+import Card from '@material-ui/core/Card';
 
+import ErrorWindow from './ErrorWindow';
 
 const StyledCard = styled(Card)`
     && {
@@ -33,63 +33,21 @@ const StyledSkycons = styled(Skycons)`
     }
 `
 
-class WeatherWindow extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            weather: {}
-        };
-    }
-
-    getWeather = async (url) => {
-        try {
-            const response = await fetch(url, {signal: this.props.fetchSignal});
-
-            if (!response.ok) {
-                throw Error(response.statusText);
-            }
-
-            const result = await response.json();
-
-            this.setState({
-                weather: {
-                    temperature: Math.round(result.currently.temperature) + "\xB0C",
-                    summary: result.currently.summary,
-                    icon: result.currently.icon.replace(/-/g, "_").toUpperCase()
-                }
-            });
-        } catch(error) {
-            this.props.handleError(error);
+const WeatherWindow  = ({ weather }) => (
+    <StyledCard>
+        {weather.error ?
+            <ErrorWindow
+                component="weather"
+                error={weather.error}
+            /> :
+            <StyledFlebox>
+                <StyledTemp>{weather.temperature}</StyledTemp>
+                <StyledSkycons 
+                    icon={weather.icon}
+                />
+            </StyledFlebox>
         }
-    }
-
-    componentDidMount() {
-        let darkSky = `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/3ebf0a35b462ec06a8299fc803dfe539/${this.props.coords.lat},${this.props.coords.lng}?units=si&exclude=minutely,hourly,daily,alerts,flags`
-
-        this.getWeather(darkSky);
-    }
-
-    componentDidUpdate(prevProps) {
-        if (this.props.coords !== prevProps.coords) {
-            let darkSky = `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/3ebf0a35b462ec06a8299fc803dfe539/${this.props.coords.lat},${this.props.coords.lng}?units=si&exclude=minutely,hourly,daily,alerts,flags`
-
-            this.getWeather(darkSky);
-        }
-    }
-
-    render() {
-        return (
-            <StyledCard>
-                <StyledFlebox>
-                    <StyledTemp>{this.state.weather.temperature}</StyledTemp>
-                    <StyledSkycons 
-                        icon={this.state.weather.icon}
-                    />
-                </StyledFlebox>
-            </StyledCard>
-        )
-    }
-}
+    </StyledCard>
+)
 
 export default WeatherWindow;

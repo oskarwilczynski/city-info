@@ -27,22 +27,20 @@ const StyledVenue = styled.p`
     }
 `
 
-class Event extends React.Component {
-    onClickEvent = () => {
-        window.open(this.props.details.url);
+const Event = () => {
+    const imagePlaceholder = "http://icons.iconarchive.com/icons/icons8/windows-8/128/City-No-Camera-icon.png"
+
+    const onClickEvent = () => {
+        window.open(details.url);
     }
 
-    render() {
-        const imagePlaceholder = "http://icons.iconarchive.com/icons/icons8/windows-8/128/City-No-Camera-icon.png"
-
-        return (
-            <StyledDiv onClick={() => {this.onClickEvent()}}>
-                <StyledImg src={this.props.details.image ? this.props.details.image.url : imagePlaceholder} />
-                <StyledTitle>{this.props.details.title}</StyledTitle>
-                <StyledVenue>{this.props.details.venue_name}</StyledVenue>
-            </StyledDiv>
-        )
-    }
+    return (
+        <StyledDiv onClick={() => onClickEvent()}>
+            <StyledImg src={details.image ? details.image.url : imagePlaceholder} />
+            <StyledTitle>{details.title}</StyledTitle>
+            <StyledVenue>{details.venue_name}</StyledVenue>
+        </StyledDiv>
+    )
 }
 
 export default Event;
