@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 
 const StarterDiv = styled.div`
@@ -18,15 +17,11 @@ const StarterText = styled.p`
     text-align: center;
 `;
 
-class StarterScreen extends React.Component {
-    render() {
-        return (
-            <StarterDiv>
-                <StarterTitle>Just search for the city...</StarterTitle>
-                <StarterText>CityInfo is a simple React web app that lets you see the city information such as basic description, weather or live events.</StarterText>            
-            </StarterDiv>
-        )
-    }
-}
+const StarterScreen = () => (
+    <StarterDiv>
+        <StarterTitle>Just search for the city...</StarterTitle>
+        <StarterText>CityInfo is a simple React web app that lets you see the city information such as basic description, weather or live events.</StarterText>            
+    </StarterDiv>
+)
 
 export default StarterScreen;

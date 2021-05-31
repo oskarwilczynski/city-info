@@ -1,7 +1,8 @@
-import React from 'react';
 import styled from 'styled-components';
-import {Card, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import sanitizeHtml from 'sanitize-html';
+import { Card, CardMedia, CardHeader, CardContent } from '@material-ui/core';
 
+import ErrorWindow from './ErrorWindow';
 
 const StyledCard = styled(Card)`
     && {
@@ -9,109 +10,37 @@ const StyledCard = styled(Card)`
         margin-bottom: 1vw;
         width: 58%;
         float: left;
+        img {
+            width: 100%;
+        }
     }
 `
 
-class DescWindow extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            city: []
-        };
+const DescWindow = ({ city }) => {
+    const createMarkup = () => {
+        return { __html: sanitizeHtml(city.description) };
     }
 
-    getCityDesc = async (url, id) => {
-        try {
-            const response = await fetch(url, {signal: this.props.fetchSignal});
-
-            if (!response.ok) {
-                throw Error(response.statusText);
+    return (
+        <StyledCard>
+            {city.error ?
+                <ErrorWindow
+                    component="city description"
+                    error={city.error}
+                /> :
+                <>
+                    <CardMedia
+                        overlay={
+                            <CardHeader title={city.title}/>
+                        }
+                    >
+                        <img src={city.image} alt={city.title} />
+                    </CardMedia>
+                    <CardContent dangerouslySetInnerHTML={createMarkup()} />
+                </>
             }
-
-            const result = await response.json();
-
-            this.setState({ 
-                city: {
-                    title: result.query.pages[id].title,
-                    description: result.query.pages[id].extract
-                }
-            });
-        } catch(error) {
-            this.props.handleError(error);
-        }
-    }
-
-    getCityImg = async (url, id) => {
-        try {
-            const response = await fetch(url, {signal: this.props.fetchSignal});
-
-            if (!response.ok) {
-                throw Error(response.statusText);
-            }
-
-            const result = await response.json();
-
-            this.setState({ 
-                city: {
-                    ...this.state.city,
-                    image: result.query.pages[id].original.source
-                }
-            });
-        } catch(error) {
-            this.props.handleError(error);
-        }
-    }
-
-    getDescData = async () => {
-        try {
-            const response = await fetch(`https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&list=search&utf8=&srsearch=${this.props.address}`, {signal: this.fetchSignal});
-    
-            if (!response.ok) {
-                throw Error(response.statusText);
-            }
-    
-            const result = await response.json();
-            const id = result.query.search[0].pageid;
-    
-            await this.getCityDesc(`https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=extracts&exintro=&pageids=${id}`, id);
-            this.getCityImg(`https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=pageimages&&piprop=original&titles=${this.state.city.title}`, id);
-        } catch(error) {
-            this.props.handleError(error);
-        }
-    }
-
-    componentDidMount() {
-        this.getDescData()
-    }
-
-    componentDidUpdate(prevProps) {
-        if (this.props.address !== prevProps.address) {
-            this.getDescData()
-        }
-    }
-
-    render() {
-        const city = this.state.city.description;
-
-        function createMarkup() {
-            return {__html: city};
-        }
-
-        return (
-            <StyledCard>
-                <CardMedia
-                    overlay={
-                        <CardTitle title={this.state.city.title}/>
-                    }
-                >
-                    <img src={this.state.city.image} alt="" />
-                </CardMedia>
-                <CardText dangerouslySetInnerHTML={createMarkup()}>
-                </CardText>
-            </StyledCard>
-        )
-    }
+        </StyledCard>
+    )
 }
 
 export default DescWindow;
